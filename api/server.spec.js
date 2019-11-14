@@ -1,5 +1,10 @@
 const request = require("supertest");
 const server = require("./server.js");
+const db = require('../database/dbConfig')
+
+beforeEach(() => {
+    return db('users').truncate()
+})
 
 describe("server", () => {
   describe("[GET] base url", () => {
@@ -38,9 +43,23 @@ describe("/api/users/* endpoints", () => {
           const testObject = {username: 'a', password: 'password'}
 
           const response = await request(server)
-          .post(`/api/users`, testObject)
-
-          expect(response.username).toBe(testObject.username)
+          .post(`/api/users`)
+          .send(testObject)
+        
+          expect(response.body.username).toBe(testObject.username)
+          expect(response.body.password).toBe(testObject.password)
       })
+
+      test(`returns correct response code`, async () => {
+        const testObject = {username: 'a', password: 'password'}
+
+        const response = await request(server)
+        .post(`/api/users`)
+        .send(testObject)
+      
+        expect(response.body.username).toBe(testObject.username)
+        expect(response.body.password).toBe(testObject.password)
+        expect(response.status).toBe(201)
+    })
   })
 });

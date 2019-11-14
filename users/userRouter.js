@@ -9,6 +9,13 @@ users.get("/", (req, res) => {
   });
 });
 
-users.post("/", (req, res) => {});
+users.post("/", (req, res) => {
+    const {username, password} = req.body
+
+    db.insert({username, password})
+    .then(result => {
+        res.status(201).json(result)
+    })
+});
 
 module.exports = users;
