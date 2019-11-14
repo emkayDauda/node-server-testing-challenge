@@ -1,15 +1,19 @@
 const db = require('../database/dbConfig')
 
-async function getAll() {
-    await db('users as u')
+function get(id) {
+    let query = db('users as u')
+    if (id) query.where('u.userId', id).first()
+
+    return query
 }
 
 async function insert(user){
-    await db('users')
+    return db('users')
     .insert(user)
+    .then(([id]) => this.get(id))
 }
 
 module.exports = {
-    getAll,
+    get,
     insert,
 }

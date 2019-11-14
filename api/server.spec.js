@@ -16,3 +16,14 @@ describe("server", () => {
     })
   });
 });
+
+describe("/api/users/* endpoints", () => {
+    describe("[GET] /api/users", () => {
+      test(`/api/users returns correct response code`, async () => {
+        const response = await request(server)
+              .get("");
+          // console.log(response);
+          expect(response.statusCode).toBe(200);
+      });
+    });
+  });
