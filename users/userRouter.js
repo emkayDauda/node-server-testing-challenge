@@ -1,14 +1,14 @@
-const express = require('express')
-const db = require('./userModel.js')
+const express = require("express");
+const db = require("./userModel.js");
 
-const users = express.Router()
+const users = express.Router();
 
-users.get('/', (req, res) => {
-    res.status(300).json([])
-})
+users.get("/", (req, res) => {
+  db.get().then(users => {
+    res.status(200).json(users);
+  });
+});
 
-users.post('/', (req, res) => {
-
-})
+users.post("/", (req, res) => {});
 
 module.exports = users;
